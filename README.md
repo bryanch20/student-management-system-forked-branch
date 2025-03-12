@@ -6,6 +6,13 @@ The **Student Management System** is a web application that allows educational i
 
 ---
 
+### **Extra Documents**
+
+- [Coding](README.code.md)
+- [Information](README.info.md)
+- [Colaboration](README.colab.md)
+- [Angular](README.angular.md)
+
 ### **Project Overview**
 
 #### **Frontend: Angular**

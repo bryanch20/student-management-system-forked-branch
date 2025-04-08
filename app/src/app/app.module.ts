@@ -10,6 +10,7 @@ import { LayoutComponent } from './layout/layout.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     NgbDropdownModule,
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -10,9 +10,6 @@ import { LayoutComponent } from './layout/layout.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { CourseListingComponent } from './course-listing/course-listing.component';
-
-import { CommonModule } from '@angular/common'; // Import of CommonModule
 
 @NgModule({
   declarations: [
@@ -30,7 +27,9 @@ import { CommonModule } from '@angular/common'; // Import of CommonModule
     FontAwesomeModule,
     CommonModule,
   ],
-  providers: [],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

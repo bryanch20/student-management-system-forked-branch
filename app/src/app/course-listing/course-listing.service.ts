@@ -1,49 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+
+export interface Course {
+  id: number;
+  name: string;
+  description: string;
+  // startDate: DateTime; // Commented for testing purposes
+  // endDate: DateTime; // Commented for testing purposes
+  startDate: string;
+  endDate: string;
+  instructor: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  private jwtHelper = new JwtHelperService();
-  private loggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
+export class CourseListingService {
+  private apiUrl = `${environment.apiUrl}/courses`;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
-  register(user: { email: string, password: string }): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/register`, user);
+  // Get all courses
+  getCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(this.apiUrl);
   }
 
-  login(user: { email: string, password: string }): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/login`, user).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-        this.loggedIn.next(true);
-      })
-    );
+  // Get course by id
+  getCourseById(id: number): Observable<Course> {
+    return this.http.get<Course>(`${this.apiUrl}/${id}`);
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    this.loggedIn.next(false);
-    this.router.navigate(['auth', 'login']);
+  // Add a new course
+  createCourse(course: Course): Observable<Course> {
+    return this.http.post<Course>(this.apiUrl, course);
   }
 
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !this.jwtHelper.isTokenExpired(token);
+  // Update an existing course
+  updateCourse(id: number, course: Course): Observable<Course> {
+    return this.http.put<Course>(`${this.apiUrl}/${id}`, course);
   }
 
-  getToken(): string {
-    return localStorage.getItem('token') || '';
-  }
-
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
+  // Delete a course
+  deleteCourse(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

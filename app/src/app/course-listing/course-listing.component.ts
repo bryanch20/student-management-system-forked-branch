@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CourseListingService, Course } from './course-listing.service';
 
 @Component({
   selector: 'app-course-listing',
@@ -39,4 +40,20 @@ export class CourseListingComponent {
       instructor: 'Albert Brown'
     }
   ];
+  
+  // Uncomment the following lines to use the CourseListingService:
+  // export class CourseListingComponent implements OnInit {
+  //   courses: Course[] = [];
+  
+  //   constructor(private courseService: CourseListingService) {}
+  
+  //   ngOnInit(): void {
+  //     this.loadCourses();
+  //   }
+  
+  //   loadCourses(): void {
+  //     this.courseService.getCourses().subscribe((data) => {
+  //       this.courses = data;
+  //     });
+  //   }
 }

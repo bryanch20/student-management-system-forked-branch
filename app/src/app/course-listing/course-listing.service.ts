@@ -43,7 +43,7 @@ export class CourseListingService {
   }
 
   // Delete a course
-  deleteCourse(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteCourse(id: number): Observable<any> {
+    return this.http.delete(`http://localhost:5000/api/Course/${id}`);
   }
 }

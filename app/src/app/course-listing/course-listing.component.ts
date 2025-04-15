@@ -40,6 +40,33 @@ export class CourseListingComponent {
       instructor: 'Albert Brown'
     }
   ];
+  constructor(private courseService: CourseListingService) {}
+
+  ngOnInit(): void {
+    this.getCourses(); 
+  }
+
+  getCourses(): void {
+    this.courseService.getCourses().subscribe({
+      next: (data) => {
+        this.courses = data;
+      },
+      error: (err) => {
+        console.error('Failed to fetch courses:', err);
+      }
+    });
+  }
+
+  deleteCourse(id: number): void {
+    if (confirm('Are you sure you want to delete this course?')) {
+      this.courseService.deleteCourse(id).subscribe({
+        next: () => {
+          this.courses = this.courses.filter(course => course.id !== id);
+        },
+        error: err => {
+          console.error('Failed to delete course:', err);
+        }
+      });
   
   // Uncomment the following lines to use the CourseListingService:
   // export class CourseListingComponent implements OnInit {
@@ -50,6 +77,7 @@ export class CourseListingComponent {
   //   ngOnInit(): void {
   //     this.loadCourses();
   //   }
+ 
   
   //   loadCourses(): void {
   //     this.courseService.getCourses().subscribe((data) => {
